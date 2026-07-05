@@ -56,8 +56,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 /* HOME HERO */
 .home-hero{position:relative;height:calc(100vh - 72px);min-height:560px;display:grid;grid-template-columns:1.05fr 0.95fr;overflow:hidden;background:var(--bg)}
 .hero-left{position:relative;display:flex;flex-direction:column;justify-content:center;padding:64px 64px;z-index:2;background:radial-gradient(120% 120% at 0% 100%,rgba(14,148,105,0.06) 0%,transparent 55%),var(--bg)}
-.hero-img{display:none}
-.hero-overlay{display:none}
 .hero-tag{position:relative;z-index:1;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--teal);text-transform:uppercase;margin-bottom:22px;display:inline-flex;align-items:center;gap:8px}
 .hero-tag::before{content:"";width:24px;height:1px;background:var(--teal)}
 .hero-title{position:relative;z-index:1;font-family:'DM Serif Display',serif;font-size:clamp(44px,4.6vw,72px);line-height:1.04;margin-bottom:20px;color:var(--text);letter-spacing:-0.01em}
@@ -95,16 +93,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .main-tile:hover .tile-arrow{gap:12px}
 
 /* GUIDE tile accent — neutral editorial */
-.tile-guide{background:linear-gradient(150deg,#FFFFFF,#F4F1E9)}
-.tile-guide .tile-top-label{background:rgba(26,24,19,0.05);color:var(--text2);border:1px solid var(--border)}
-.tile-guide .tile-arrow{color:var(--text2)}
-.tile-guide-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.tile-guide-badge{font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);color:var(--text2)}
-.tile-guide-btns{display:flex;gap:10px;margin-bottom:20px}
-.tile-guide-btn-primary{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:10px 18px;border-radius:6px;background:var(--teal);color:#fff;border:none;cursor:pointer;transition:background .2s}
-.tile-guide-btn-primary:hover{background:var(--teal-mid)}
-.tile-guide-btn-ghost{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:10px 18px;border-radius:6px;background:transparent;color:var(--text2);border:1px solid var(--border2);cursor:pointer;transition:all .2s}
-.tile-guide-btn-ghost:hover{border-color:var(--text2);color:var(--text)}
 .tile-courses{background:linear-gradient(150deg,#FFFFFF,#EAF6F0)}
 .tile-courses .tile-top-label{background:rgba(14,148,105,0.10);color:var(--teal-dark);border:1px solid rgba(14,148,105,0.22)}
 .tile-courses .tile-arrow{color:var(--teal-dark)}
@@ -324,8 +312,6 @@ footer{padding:44px 64px;border-top:1px solid var(--border);display:flex;justify
 
   <div class="home-hero">
     <div class="hero-left">
-      <img class="hero-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Imperial_College_South_Kensington_Kampusz.jpg?width=1400" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1583373834259-46cc92173cb7?w=1400'" alt="Imperial College London">
-      <div class="hero-overlay"></div>
       <div class="hero-tag">Imperial College London</div>
       <h1 class="hero-title">The guide that<br><em>should</em> have existed.</h1>
       <p class="hero-sub">We made the resource we wished we'd had — everything from A-level prep to what Imperial actually feels like from the inside.</p>
@@ -734,12 +720,182 @@ footer{padding:44px 64px;border-top:1px solid var(--border);display:flex;justify
       <div class="info-box"><div class="info-box-label">Duration</div><div class="info-box-value">3–4 years</div></div>
       <div class="info-box"><div class="info-box-label">Department</div><div class="info-box-value">Materials</div></div>
     </div>
-    <div class="content-body"><p>Materials Science at Imperial is one of the UK's leading programmes, covering the full range from nano-scale structure to large-scale engineering applications. If you want to understand why things are made from what they're made from — and how to make them better — this is the degree.</p></div>
+    <div class="info-row">
+      <div class="info-box"><div class="info-box-label">Typical Offer</div><div class="info-box-value">AAA (IB 38)</div></div>
+      <div class="info-box"><div class="info-box-label">Admissions Test</div><div class="info-box-value">None required</div></div>
+      <div class="info-box"><div class="info-box-label">Interview</div><div class="info-box-value">Yes</div></div>
+    </div>
+    <div class="content-body">
+      <p>The Materials Science &amp; Engineering degree at Imperial combines physics, chemistry and engineering to understand how materials are designed, processed and used in modern technology. It covers the full range from metals and polymers to biomaterials and nanotechnology, building theoretical knowledge and practical skill through lab work and research-led teaching.</p>
+      <h3>What makes it different?</h3>
+      <p>You learn to connect a material's atomic structure to its real-world performance — and how to engineer both. Roughly 8 applicants compete for each place, and graduates go into energy, healthcare, aerospace and advanced manufacturing.</p>
+      <h3>Interview</h3>
+      <p>Interviews are in-person for home students and online for international applicants. There is no admissions test — your grades, personal statement and interview do the work.</p>
+    </div>
   </div>
-  <div class="tab-content" id="ms-tab-alevels"><div class="content-body"><p>Content coming soon.</p></div></div>
-  <div class="tab-content" id="ms-tab-apply"><div class="content-body"><p>Application guide coming soon.</p></div></div>
-  <div class="tab-content" id="ms-tab-course"><div class="content-body"><p>Module breakdown coming soon.</p></div></div>
-  <div class="tab-content" id="ms-tab-life"><div class="content-body"><p>Student life content coming soon.</p></div></div>
+  <div class="tab-content" id="ms-tab-alevels">
+    <div class="alevel-grid">
+      <div class="alevel-card">
+        <div class="alevel-title">Required subjects</div>
+        <div class="alevel-body">
+          <span class="alevel-badge">Mathematics</span>
+          <span class="alevel-badge">Chemistry <em>or</em> Physics</span>
+          <p style="margin-top:12px;font-size:13px">Imperial require an A in Mathematics and an A in either Chemistry or Physics.</p>
+        </div>
+      </div>
+      <div class="alevel-card">
+        <div class="alevel-title">Typical offer</div>
+        <div class="alevel-body">
+          <p style="font-size:22px;font-family:'DM Serif Display',serif;color:var(--text);margin-bottom:8px">AAA</p>
+          <p style="font-size:13px">The minimum entry standard for both the BSc and the MSci. IB applicants typically need 38 points.</p>
+        </div>
+      </div>
+      <div class="alevel-card">
+        <div class="alevel-title">Recommended subjects</div>
+        <div class="alevel-body">
+          <span class="alevel-badge">Mathematics</span>
+          <span class="alevel-badge">Chemistry</span>
+          <span class="alevel-badge">Physics</span>
+          <span class="alevel-badge">Further Maths</span>
+          <p style="margin-top:12px;font-size:13px">Taking Maths, Chemistry and Physics together is the strongest preparation. Further Maths is a well-regarded fourth subject.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="ms-tab-apply">
+    <div id="apply-ms-main">
+      <div class="apply-grid">
+        <div class="apply-card" onclick="showApplyDetail('ms','ps')">
+          <div class="apply-card-icon">✍️</div>
+          <div class="apply-card-title">Personal Statement</div>
+          <div class="apply-card-sub">The new UCAS format splits into three questions. What each one is really asking, and how to show genuine motivation for Materials.</div>
+        </div>
+        <div class="apply-card" onclick="showApplyDetail('ms','interview')">
+          <div class="apply-card-icon">🎙️</div>
+          <div class="apply-card-title">Interview</div>
+          <div class="apply-card-sub">In-person for home students, online for internationals. What to expect and how to prepare for a conversational academic interview.</div>
+        </div>
+        <div class="apply-card" style="cursor:default">
+          <div class="apply-card-icon">✅</div>
+          <div class="apply-card-title">No Admissions Test</div>
+          <div class="apply-card-sub">Materials does not use the ESAT. Your grades, personal statement and interview carry the whole application.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="apply-ms-ps" style="display:none">
+      <button class="back-btn" onclick="hideApplyDetail('ms')">← Back to application</button>
+      <div class="page-header-label">Personal Statement</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:16px">The three questions</h2>
+      <div class="apply-detail-grid">
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(46,115,201,0.1);color:var(--blue-dark);border:0.5px solid rgba(46,115,201,0.2)">Question 1</span>
+          <div class="apply-detail-card-title">Why this course?</div>
+          <div class="apply-detail-card-sub">Show genuine interest. You don't need experience — initiative and passion matter. A topic you explored, a book, or a personal moment that pushed you toward materials. The more personal, the better.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(46,115,201,0.1);color:var(--blue-dark);border:0.5px solid rgba(46,115,201,0.2)">Question 2</span>
+          <div class="apply-detail-card-title">How have your studies prepared you?</div>
+          <div class="apply-detail-card-sub">Tie your A-levels to the degree. How did Maths prepare you for the engineering side? Which topic in Chemistry or Physics gripped you? What have your other subjects taught you that transfers?</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(46,115,201,0.1);color:var(--blue-dark);border:0.5px solid rgba(46,115,201,0.2)">Question 3</span>
+          <div class="apply-detail-card-title">What else have you done?</div>
+          <div class="apply-detail-card-sub">Preparation outside education: short courses, part-time jobs, work experience. It needn't be about materials — but explain the skills it gave you for thriving at university.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="apply-ms-interview" style="display:none">
+      <button class="back-btn" onclick="hideApplyDetail('ms')">← Back to application</button>
+      <div class="page-header-label">Interview</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:16px">Interview Preparation</h2>
+      <div class="apply-detail-grid">
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(46,115,201,0.1);color:var(--blue-dark);border:0.5px solid rgba(46,115,201,0.2)">Format</span>
+          <div class="apply-detail-card-title">What to expect</div>
+          <div class="apply-detail-card-sub">In-person on campus for home students, online for international applicants. Conversational rather than adversarial — they want to see how you think.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(46,115,201,0.1);color:var(--blue-dark);border:0.5px solid rgba(46,115,201,0.2)">Preparation</span>
+          <div class="apply-detail-card-title">Know your statement</div>
+          <div class="apply-detail-card-sub">Expect questions that branch off your personal statement, so know everything you wrote inside out. Be ready to reason through problems from your A-level Maths, Chemistry and Physics.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(46,115,201,0.1);color:var(--blue-dark);border:0.5px solid rgba(46,115,201,0.2)">Approach</span>
+          <div class="apply-detail-card-title">Think out loud</div>
+          <div class="apply-detail-card-sub">Don't memorise answers. Follow the logic and narrate your reasoning — showing scientific thinking matters more than landing the perfect final answer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="ms-tab-course">
+    <div class="content-body" style="max-width:none;margin-bottom:32px">
+      <p>The department offers four course pathways that share the same teaching for the first two years: Materials Science &amp; Engineering (BEng), Materials Science &amp; Engineering (MEng), Materials with Nuclear Engineering (MEng), and Biomaterials with Tissue Engineering (MEng). You choose electives from Year 3, and the fourth year is an integrated masters year.</p>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 1 — Foundations</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Mathematics &amp; Computing 1</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Performance of Structural Materials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Engineering Practice 1</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Materials Processing 1</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Structure 1</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Properties 1</div></div>
+      </div>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 2 — Core Science</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Mathematics &amp; Computing 2</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Engineering Practice 2</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Materials Characterisation</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Properties 2</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Structure 2</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Performance of Functional Materials</div></div>
+      </div>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 3 — Advanced (choose 4 optional modules)</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Materials Processing 2</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Processing Laboratory</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Theory &amp; Simulation of Materials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Managerial Economics</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Research Techniques</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">I-Explore</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Sustainable Metallurgy</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Powder-Based Manufacturing</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Nanomaterials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Maths &amp; Quantum Mechanics</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Biomaterials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Optoelectronic Materials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Advanced Characterisation</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Nuclear Fusion</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Magnetic Materials &amp; Devices</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Materials Sustainability</div></div>
+      </div>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 4 — Integrated Masters (choose 4 optional modules)</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--blue)">Core</div><div class="module-card-name">Individual Masters Project</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Nuclear Materials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Materials for Energy Conversion &amp; Storage</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Density-Functional Theory</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Ceramics &amp; Composites for Extreme Environments</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Materials for Quantum &amp; Semiconductor Technologies</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Machine Learning for Materials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Tissue Engineering</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Nanomedicine</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Aerospace Metallurgy</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Elective</div><div class="module-card-name">Microstructure Engineering in Metal Processing</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="ms-tab-life">
+    <div class="content-body"><p>Student life guide coming soon — written by a current Materials student.</p></div>
+  </div>
   <footer><div class="footer-logo">de/<span>guide</span></div><div class="footer-text">Built by Uthman · Imperial College London</div></footer>
 </div>
 
@@ -800,14 +956,198 @@ footer{padding:44px 64px;border-top:1px solid var(--border);display:flex;justify
     <div class="info-row">
       <div class="info-box"><div class="info-box-label">Degree</div><div class="info-box-value">MSci / BSc</div></div>
       <div class="info-box"><div class="info-box-label">Duration</div><div class="info-box-value">3–4 years</div></div>
-      <div class="info-box"><div class="info-box-label">Department</div><div class="info-box-value">Earth Science</div></div>
+      <div class="info-box"><div class="info-box-label">Department</div><div class="info-box-value">Earth Science &amp; Engineering</div></div>
     </div>
-    <div class="content-body"><p>Imperial's Geology programme draws on the university's deep roots in earth sciences and its proximity to the Natural History Museum. Fieldwork is central — you'll be outdoors from Year 1, mapping real terrain and building physical intuition alongside the theory.</p></div>
+    <div class="info-row">
+      <div class="info-box"><div class="info-box-label">Typical Offer</div><div class="info-box-value">AAA (IB 38)</div></div>
+      <div class="info-box"><div class="info-box-label">Admissions Test</div><div class="info-box-value">None required</div></div>
+      <div class="info-box"><div class="info-box-label">Interview</div><div class="info-box-value">Yes (offline / online)</div></div>
+    </div>
+    <div class="content-body">
+      <p>Imperial's Geology programme is a fieldwork-intensive degree. From Year 1 you're outdoors, mapping real terrain in Dorset and Cornwall — with Scotland, the Pyrenees, Sardinia and the Apennines in later years. The department sits within the Royal School of Mines (RSM), affiliated with the Geological Society of London since the 19th century and still one of the most recognised earth science institutions in the world.</p>
+      <h3>What makes it different?</h3>
+      <p>Unlike most geology programmes, Imperial emphasises the quantitative side of earth science alongside the observational. You'll do real programming, work with geophysical datasets, and take modules sitting at the boundary of earth science, physics and data science.</p>
+      <h3>Streams: Geology vs Geophysics vs Earth &amp; Planetary Science</h3>
+      <p>All three streams share the same Year 1 Term 1 modules and the Year 1 field trip, then diverge gradually. You can still switch streams up to around the end of Term 2 in Year 1 (subject to entry requirements), and transfers between BSc and MSci are possible in the early stages — speak to your personal or senior tutor.</p>
+      <h3>Accreditation &amp; careers</h3>
+      <p>The MSci is accredited by the Geological Society of London, and you graduate with the Associateship of the Royal School of Mines (ARSM). About 91% of Earth Science &amp; Engineering graduates are in work or further study within 15 months, going into environmental consultancy, mining, oil &amp; gas, geotechnical engineering, academia and increasingly data-heavy roles.</p>
+    </div>
   </div>
-  <div class="tab-content" id="geo-tab-alevels"><div class="content-body"><p>A-levels guide coming soon.</p></div></div>
-  <div class="tab-content" id="geo-tab-apply"><div class="content-body"><p>Application guide coming soon.</p></div></div>
-  <div class="tab-content" id="geo-tab-course"><div class="content-body"><p>Module breakdown coming soon.</p></div></div>
-  <div class="tab-content" id="geo-tab-life"><div class="content-body"><p>Student life content coming soon.</p></div></div>
+  <div class="tab-content" id="geo-tab-alevels">
+    <div class="alevel-grid">
+      <div class="alevel-card">
+        <div class="alevel-title">Required subjects</div>
+        <div class="alevel-body">
+          <span class="alevel-badge">Biology</span>
+          <span class="alevel-badge">Chemistry</span>
+          <span class="alevel-badge">Geography</span>
+          <span class="alevel-badge">Geology</span>
+          <span class="alevel-badge">Mathematics</span>
+          <span class="alevel-badge">Physics</span>
+          <p style="margin-top:12px;font-size:13px">At least two A-levels from this list. Most successful applicants bring Maths plus one lab science (Chemistry or Physics).</p>
+        </div>
+      </div>
+      <div class="alevel-card">
+        <div class="alevel-title">Typical offer</div>
+        <div class="alevel-body">
+          <p style="font-size:22px;font-family:'DM Serif Display',serif;color:var(--text);margin-bottom:8px">AAA</p>
+          <p style="font-size:13px">The minimum entry standard for both the BSc and the MSci. IB applicants typically need 38 points.</p>
+        </div>
+      </div>
+      <div class="alevel-card">
+        <div class="alevel-title">Recommended subjects</div>
+        <div class="alevel-body">
+          <span class="alevel-badge">Mathematics</span>
+          <span class="alevel-badge">Physics</span>
+          <span class="alevel-badge">Chemistry</span>
+          <p style="margin-top:12px;font-size:13px">Mathematics is strongly favoured. Physics and Chemistry open up the more quantitative Year 1 modules — like physical processes and geochemistry — from day one.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="geo-tab-apply">
+    <div id="apply-geo-main">
+      <div class="apply-grid">
+        <div class="apply-card" onclick="showApplyDetail('geo','ps')">
+          <div class="apply-card-icon">✍️</div>
+          <div class="apply-card-title">Personal Statement</div>
+          <div class="apply-card-sub">With no admissions test, your statement and grades get you shortlisted. Four things that make a geology PS stand out.</div>
+        </div>
+        <div class="apply-card" onclick="showApplyDetail('geo','interview')">
+          <div class="apply-card-icon">🎙️</div>
+          <div class="apply-card-title">Interview</div>
+          <div class="apply-card-sub">One-on-one with an academic, offline or online. Conversational rather than adversarial — what they're really testing.</div>
+        </div>
+        <div class="apply-card" style="cursor:default">
+          <div class="apply-card-icon">✅</div>
+          <div class="apply-card-title">No Admissions Test</div>
+          <div class="apply-card-sub">Geology does not use the ESAT. Your grades, personal statement and interview do all the heavy lifting.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="apply-geo-ps" style="display:none">
+      <button class="back-btn" onclick="hideApplyDetail('geo')">← Back to application</button>
+      <div class="page-header-label">Personal Statement</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:16px">Writing your Personal Statement</h2>
+      <div class="apply-detail-grid">
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Opening</span>
+          <div class="apply-detail-card-title">Lead with curiosity</div>
+          <div class="apply-detail-card-sub">Skip "I've always been fascinated by rocks" — tutors can tell. Open with something specific: a phenomenon you looked into, a field-trip moment that reframed how you see the earth, a paper you stumbled on.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Content</span>
+          <div class="apply-detail-card-title">Connect it to geology</div>
+          <div class="apply-detail-card-sub">Tie every experience back to a geological concept or process. Don't list what you did — say what it taught you about the earth. Tutors read for scientific thinking, not a CV.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Detail</span>
+          <div class="apply-detail-card-title">Name the real thing</div>
+          <div class="apply-detail-card-sub">Naming actual geology — theodolite, compass, karst terrain, specific rock types — shows you know the discipline, not just the idea of it. Used an instrument or visited a site? Name it and say what you learned.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Closing</span>
+          <div class="apply-detail-card-title">A concrete vision</div>
+          <div class="apply-detail-card-sub">Do more than say you love geology. Name specific Imperial modules you plan to take and why they matter to your goals — this makes the statement feel written for Imperial, not a generic application.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="apply-geo-interview" style="display:none">
+      <button class="back-btn" onclick="hideApplyDetail('geo')">← Back to application</button>
+      <div class="page-header-label">Interview</div>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:16px">Interview Preparation</h2>
+      <div class="apply-detail-grid">
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Format</span>
+          <div class="apply-detail-card-title">What to expect</div>
+          <div class="apply-detail-card-sub">One-on-one with a member of academic staff, offline or online. Conversational rather than adversarial — they want to see if you can think scientifically and handle the quantitative demands of the course.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Questions</span>
+          <div class="apply-detail-card-title">What they ask</div>
+          <div class="apply-detail-card-sub">Questions branch off your personal statement, so know everything you wrote inside out. Expect to explain an A-level concept or reason through a geological scenario from first principles.</div>
+        </div>
+        <div class="apply-detail-card">
+          <span class="apply-detail-card-tag" style="background:rgba(183,116,15,0.1);color:var(--amber-dark);border:0.5px solid rgba(183,116,15,0.2)">Approach</span>
+          <div class="apply-detail-card-title">Show your thinking</div>
+          <div class="apply-detail-card-sub">Don't memorise answers. Follow the logic and think out loud — they're interested in how you reason, not whether you already know the answer.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="geo-tab-course">
+    <div class="content-body" style="max-width:none;margin-bottom:32px">
+      <p>The Geology degree has a shared core across Years 1 and 2, then branches into elective-heavy Years 3 and 4. Fieldwork is woven throughout: Dorset + Cornwall (Year 1), Pyrenees + Scotland (Year 2), Sardinia (Year 3) and the Apennines (Year 4).</p>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 1 — Foundations (shared core)</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Dynamic Earth and Planets</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Stratigraphy &amp; Geomaterials</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Deforming the Earth</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Physical and Surface Processes</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Volcanism and Internal Processes</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Programming for Geoscientists</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Life over Deep Time</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--teal-mid)">Fieldwork</div><div class="module-card-name">Geology in the Field — Dorset + Cornwall</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--purple)">Choice</div><div class="module-card-name">Chemistry for Geoscientists <em>or</em> Low Temperature Geochemistry</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--purple)">Choice</div><div class="module-card-name">Mathematics for Geoscientists <em>or</em> Maths Methods 1</div></div>
+      </div>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 2 — Core Science</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">High Temperature Geochemistry</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Pure and Applied Geophysics</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Solar System Geoscience</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Maps and Structures</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Remote Sensing — Earth &amp; Planets</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Igneous &amp; Metamorphic Petrology</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Sediments and Stratigraphy</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Palaeontology and Optical Mineralogy</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--teal-mid)">Fieldwork</div><div class="module-card-name">Rocks &amp; Structures in the Field — Pyrenees + Scotland</div></div>
+      </div>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 3 — Specialisation</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">Independent Mapping Project</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">I-Explore (cross-faculty elective)</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--purple)">Choice ×3</div><div class="module-card-name">Term 1: Continental Tectonics · Climate · Mining Geology &amp; Engineering · Near Surface Seismic Imaging · Advanced Remote Sensing</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--purple)">Choice ×4</div><div class="module-card-name">Term 2: Palaeobiology · Sea Levels · Tectonics of the Oceans · Arc Magmatic Processes · Geodynamics · Data Science &amp; ML · Contaminant Transport · and more</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--teal-mid)">Fieldwork</div><div class="module-card-name">Integrated Advanced Field Geology — Sardinia</div></div>
+      </div>
+    </div>
+    <div class="year-block">
+      <div class="year-label">Year 4 — Masters (MSci only)</div>
+      <div class="modules-grid">
+        <div class="module-card"><div class="module-card-type" style="color:var(--amber)">Core</div><div class="module-card-name">MSci Research Project</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--teal-mid)">Fieldwork</div><div class="module-card-name">Field Geology of an Active Mountain Belt — Apennines</div></div>
+        <div class="module-card"><div class="module-card-type" style="color:var(--purple)">Choice ×6</div><div class="module-card-name">Palaeobiology · Geodynamics · Geohazards · Planetary Physics · Magmatic Processes · Geological Reactive Transport · Applied Geomorphology · Meteorites · Minerals Processing · and more</div></div>
+      </div>
+    </div>
+    <div class="content-body" style="max-width:none;margin-top:8px">
+      <h3>Degree weightings</h3>
+      <ul>
+        <li><strong>MSci:</strong> Year 1 (7.5%) · Year 2 (20%) · Year 3 (36.25%) · Year 4 (36.25%)</li>
+        <li><strong>BSc:</strong> Year 1 (7.5%) · Year 2 (35%) · Year 3 (57.5%)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content" id="geo-tab-life">
+    <div class="content-body">
+      <h3>The Royal School of Mines</h3>
+      <p>You'll be based in the RSM Building on the South Kensington campus. The RSM has its own students' union (RSMU), sports clubs and traditions — fresher dinners, end-of-term dinners, pub crawls, socials and wellbeing events.</p>
+      <h3>Fieldwork culture</h3>
+      <p>The fieldwork is the centrepiece of the degree: Dorset + Cornwall in Year 1, the Pyrenees and Scotland in Year 2, Sardinia in Year 3 and the Apennines in Year 4. These aren't day trips — you're mapping unfamiliar terrain in small teams and building the observational skill that defines a geologist. Most students call the field trips the highlight of their degree.</p>
+      <h3>Workload &amp; assessment</h3>
+      <p>The degree is exam-heavy in Years 1 and 2 (exams are roughly 65% and 75% of assessment), shifting toward coursework and project work in Years 3 and 4. Field reports carry real weight, so build time-management around field seasons and revision early.</p>
+      <h3>Accreditation &amp; careers</h3>
+      <p>The MSci is accredited by the Geological Society of London and reduces the post-graduation experience needed to become a Chartered Geologist (CGeol). Graduates go into environmental consulting, mining, oil &amp; gas, geotechnical firms, academic research and data-heavy roles, and the ARSM associateship is a respected credential in its own right.</p>
+    </div>
+  </div>
   <footer><div class="footer-logo">de/<span>guide</span></div><div class="footer-text">Built by Uthman · Imperial College London</div></footer>
 </div>
 
@@ -970,7 +1310,9 @@ function showApplyDetail(course, section) {
 }
 
 function hideApplyDetail(course) {
-  document.getElementById('apply-'+course+'-main').style.display = 'block';
+  const main = document.getElementById('apply-'+course+'-main');
+  if(!main) return;
+  main.style.display = 'block';
   ['ps','esat','interview'].forEach(s => {
     const el = document.getElementById('apply-'+course+'-'+s);
     if(el) el.style.display = 'none';
