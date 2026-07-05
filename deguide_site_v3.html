@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>de/guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* ===== THEME VARIABLES ===== */
+[data-theme="dark"]{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;
+  --border:#222;--border2:#2e2e2e;
+  --text:#f0f0f0;--text2:#888;--text3:#3a3a3a;
+  --nav-bg:rgba(10,10,10,0.92);
+  --sidebar-bg:#0d0d0d;--sidebar-border:#1e1e1e;
+  --sidebar-item:#1a1a1a;--sidebar-item-hover:#222;
+  --sidebar-text:#666;--sidebar-text-active:#f0f0f0;
+  --card-bg:#111;
+  --teal:#1D9E75;--teal-dark:#0a1f17;--teal-mid:#0F6E56;--teal-light:#5DCAA5;
+  --blue:#378ADD;--blue-dark:#0a1525;
+  --amber:#BA7517;--amber-dark:#1e1100;--amber-light:#FAC775;
+  --coral:#993C1D;--coral-dark:#1e0a05;
+  --purple:#7F77DD;--purple-dark:#100f1e;
+  --toggle-bg:#222;--toggle-icon:"☀️";
+}
+[data-theme="light"]{
+  --bg:#f7f6f2;--bg2:#eeede9;--bg3:#e6e5e1;
+  --border:#dddcda;--border2:#cccbc8;
+  --text:#1a1a1a;--text2:#666;--text3:#aaa;
+  --nav-bg:rgba(247,246,242,0.94);
+  --sidebar-bg:#eeede9;--sidebar-border:#dddcda;
+  --sidebar-item:#e6e5e1;--sidebar-item-hover:#dddcda;
+  --sidebar-text:#999;--sidebar-text-active:#1a1a1a;
+  --card-bg:#fff;
+  --teal:#0F6E56;--teal-dark:#d4ede6;--teal-mid:#0a5240;--teal-light:#0d7a5e;
+  --blue:#1a6cb5;--blue-dark:#dae8f7;
+  --amber:#8a5200;--amber-dark:#fdf0d5;--amber-light:#7a4800;
+  --coral:#7a2a10;--coral-dark:#fde8e0;
+  --purple:#5850b8;--purple-dark:#eceafb;
+  --toggle-bg:#dddcda;--toggle-icon:"🌙";
+}
+
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;transition:background .3s,color .3s}
+
+/* ===== LAYOUT SHELL ===== */
+.shell{display:flex;min-height:100vh;padding-top:60px}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 0;height:60px;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border);transition:background .3s}
+.nav-left{display:flex;align-items:center;gap:0}
+.sidebar-toggle{width:60px;height:60px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--text2);font-size:18px;transition:color .2s;flex-shrink:0}
+.sidebar-toggle:hover{color:var(--teal)}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:17px;cursor:pointer;color:var(--text);padding:0 16px}
+.nav-logo span{font-style:italic;color:var(--teal)}
+.nav-breadcrumb{display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px}
+.nav-breadcrumb .crumb{color:var(--text2);cursor:pointer;transition:color .2s}
+.nav-breadcrumb .crumb:hover{color:var(--teal)}
+.nav-breadcrumb .crumb.active{color:var(--teal)}
+.nav-breadcrumb .sep{color:var(--text3)}
+
+/* ===== SIDEBAR ===== */
+.sidebar{position:fixed;top:60px;left:0;bottom:0;width:240px;background:var(--sidebar-bg);border-right:0.5px solid var(--sidebar-border);z-index:150;display:flex;flex-direction:column;transform:translateX(-240px);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sidebar.open{transform:translateX(0)}
+.sidebar-section{padding:16px 12px 8px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;cursor:pointer;transition:background .15s,color .15s;color:var(--sidebar-text);font-size:12px;margin:1px 6px;border:none;background:none;width:calc(100% - 12px);text-align:left}
+.sidebar-item:hover{background:var(--sidebar-item-hover);color:var(--sidebar-text-active)}
+.sidebar-item.active{background:var(--teal-dark);color:var(--teal)}
+.sidebar-item .si-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.5}
+.sidebar-item.active .si-dot{opacity:1;background:var(--teal)}
+.sidebar-item .si-arrow{margin-left:auto;font-size:10px;opacity:.3}
+.sidebar-divider{height:0.5px;background:var(--sidebar-border);margin:8px 12px}
+.sidebar-bottom{margin-top:auto;padding:12px}
+
+/* THEME TOGGLE in sidebar */
+.theme-toggle{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:6px;background:var(--sidebar-item);border:0.5px solid var(--border);cursor:pointer;transition:border-color .2s}
+.theme-toggle:hover{border-color:var(--teal)}
+.theme-toggle-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);letter-spacing:.05em}
+.theme-toggle-switch{width:36px;height:20px;border-radius:10px;background:var(--border2);position:relative;transition:background .3s;flex-shrink:0}
+.theme-toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .3s}
+[data-theme="light"] .theme-toggle-switch{background:var(--teal)}
+[data-theme="light"] .theme-toggle-switch::after{transform:translateX(16px)}
+.theme-toggle-emoji{font-size:14px}
+
+/* ===== MAIN CONTENT ===== */
+.main{flex:1;min-width:0;transition:margin-left .3s}
+.main.sidebar-open{margin-left:240px}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:calc(100vh - 60px);animation:fadeIn .35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== HOME ===== */
+.home-hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px)}
+.hero-image-col{position:relative;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.45) saturate(0.8)}
+[data-theme="light"] .hero-img{filter:brightness(0.6) saturate(0.9)}
+.hero-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.75) 0%,rgba(29,158,117,0.1) 100%)}
+[data-theme="light"] .hero-img-overlay{background:linear-gradient(135deg,rgba(247,246,242,0.7) 0%,rgba(15,110,86,0.08) 100%)}
+.hero-text-over{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:48px}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.hero-text-over h1{font-family:'DM Serif Display',serif;font-size:48px;line-height:1.05;letter-spacing:-.5px;margin-bottom:14px;color:var(--text)}
+.hero-text-over h1 em{font-style:italic;color:var(--teal)}
+.hero-text-over p{font-size:13px;line-height:1.75;color:var(--text2);margin-bottom:28px;max-width:420px}
+.btn-row{display:flex;gap:10px;margin-bottom:24px}
+.btn-primary{background:var(--teal);color:#fff;border:none;padding:11px 24px;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{background:transparent;color:var(--text);border:0.5px solid var(--border2);padding:11px 24px;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;cursor:pointer;transition:border-color .2s}
+.btn-ghost:hover{border-color:var(--teal)}
+.badge-row{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:20px;background:var(--bg3);color:var(--text3);border:0.5px solid var(--border)}
+.home-right{display:grid;grid-template-rows:1fr 1fr;border-left:0.5px solid var(--border)}
+.track-card{position:relative;overflow:hidden;cursor:pointer}
+.track-card:first-child{border-bottom:0.5px solid var(--border)}
+.track-card-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.3) saturate(0.6);transition:filter .4s}
+.track-card:hover .track-card-img{filter:brightness(0.45) saturate(0.8)}
+[data-theme="light"] .track-card-img{filter:brightness(0.5) saturate(0.7)}
+[data-theme="light"] .track-card:hover .track-card-img{filter:brightness(0.65) saturate(0.9)}
+.track-card-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:32px;background:linear-gradient(to top,rgba(10,10,10,0.9) 0%,transparent 60%)}
+[data-theme="light"] .track-card-content{background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%)}
+.track-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.track-num.de{color:var(--teal)}
+.track-num.ms{color:var(--blue)}
+.track-card-content h3{font-size:17px;font-weight:500;margin-bottom:6px;color:#fff}
+.track-card-content p{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.55;max-width:260px}
+.track-arrow{position:absolute;top:24px;right:24px;width:32px;height:32px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;color:rgba(255,255,255,0.4);transition:all .2s}
+.track-card:hover .track-arrow{border-color:var(--teal);color:var(--teal);transform:translate(2px,-2px)}
+.track-card.locked{cursor:default}
+.track-card.locked .track-arrow{display:none}
+.coming-pill{position:absolute;top:24px;right:24px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);border:0.5px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:20px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:0.5px solid var(--border)}
+.stat{padding:22px 28px;background:var(--bg);transition:background .3s}
+.stat-num{font-family:'DM Serif Display',serif;font-size:30px;color:var(--teal)}
+.stat-label{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4}
+footer{padding:20px 48px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:11px;color:var(--text3)}
+footer span{font-size:11px;color:var(--text2);font-weight:500}
+
+/* ===== INNER PAGES ===== */
+.inner-hero{position:relative;height:260px;overflow:hidden}
+.inner-hero-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.3) saturate(0.7)}
+[data-theme="light"] .inner-hero-img{filter:brightness(0.5) saturate(0.8)}
+.inner-hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,0.95) 40%,rgba(10,10,10,0.4) 100%)}
+[data-theme="light"] .inner-hero-overlay{background:linear-gradient(to right,rgba(247,246,242,0.97) 35%,rgba(247,246,242,0.5) 100%)}
+.inner-hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:48px}
+.inner-hero-content .tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.inner-hero-content h2{font-family:'DM Serif Display',serif;font-size:36px;line-height:1.1;letter-spacing:-.3px;margin-bottom:8px;color:var(--text)}
+.inner-hero-content h2 em{font-style:italic;color:var(--teal)}
+.inner-hero-content p{font-size:13px;color:var(--text2);max-width:480px;line-height:1.65}
+.section-body{padding:36px 44px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer;margin-bottom:28px;transition:color .2s;background:none;border:none;padding:0}
+.back-btn:hover{color:var(--teal)}
+.section-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:36px}
+.section-card{background:var(--bg);padding:28px 24px;cursor:pointer;transition:background .2s;position:relative}
+.section-card:hover{background:var(--bg2)}
+.section-card .s-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.08em;margin-bottom:12px}
+.section-card h3{font-size:15px;font-weight:500;margin-bottom:8px}
+.section-card p{font-size:12px;color:var(--text2);line-height:1.6;padding-right:20px}
+.section-card .arrow{position:absolute;bottom:18px;right:18px;font-size:14px;color:var(--text3);transition:all .2s}
+.section-card:hover .arrow{color:var(--teal);bottom:16px}
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.content-item{background:var(--bg);padding:16px 20px;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:space-between}
+.content-item:hover{background:var(--bg2)}
+.content-item-left{display:flex;align-items:center;gap:12px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-teal{background:var(--teal)}
+.dot-amber{background:var(--amber)}
+.dot-coral{background:var(--coral)}
+.dot-purple{background:var(--purple)}
+.content-item h4{font-size:13px;font-weight:500}
+.content-item p{font-size:11px;color:var(--text2);margin-top:2px}
+.content-item .arr{font-size:11px;color:var(--text3)}
+.year-tabs{display:flex;gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:14px;width:fit-content}
+.year-tab{padding:8px 22px;font-family:'DM Mono',monospace;font-size:11px;background:var(--bg);color:var(--text2);cursor:pointer;transition:all .2s;border:none}
+.year-tab.active,.year-tab:hover{background:var(--teal-dark);color:var(--teal)}
+.modules-panel{display:none}
+.modules-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:10px;overflow:hidden}
+.module-item{background:var(--bg);padding:13px 17px;transition:background .3s}
+.module-item h4{font-size:12px;font-weight:500;margin-bottom:3px;color:var(--text)}
+.module-item p{font-size:11px;color:var(--text2);line-height:1.5}
+.module-item.optional{background:var(--amber-dark)}
+.module-item.optional h4{color:var(--amber-light)}
+[data-theme="light"] .module-item.optional h4{color:var(--amber)}
+.module-item.placement{background:var(--coral-dark)}
+.module-item.placement h4{color:#c05030}
+[data-theme="light"] .module-item.placement h4{color:var(--coral)}
+.module-item.iexplore{background:var(--purple-dark)}
+.module-item.iexplore h4{color:#AFA9EC}
+[data-theme="light"] .module-item.iexplore h4{color:var(--purple)}
+.alevel-required{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--teal-dark);border:0.5px solid var(--teal);border-radius:8px;margin-bottom:18px}
+.alevel-required .grade{font-family:'DM Mono',monospace;font-size:22px;color:var(--teal);font-weight:500;min-width:36px}
+.alevel-required h4{font-size:14px;font-weight:500}
+.alevel-required p{font-size:11px;color:var(--teal-light);margin-top:2px}
+[data-theme="light"] .alevel-required p{color:var(--teal-mid)}
+.alevel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.alevel-card{padding:15px 17px;background:var(--amber-dark);border:0.5px solid var(--amber);border-radius:8px}
+.alevel-card h4{font-size:13px;font-weight:500;color:var(--amber-light);margin-bottom:4px}
+[data-theme="light"] .alevel-card h4{color:var(--amber)}
+.alevel-card p{font-size:11px;color:var(--text2);line-height:1.5}
+.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.sub-card{padding:18px;background:var(--bg3);border:0.5px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .2s,background .3s}
+.sub-card:hover{border-color:var(--teal)}
+.sub-card h4{font-size:13px;font-weight:500;margin-bottom:6px}
+.sub-card p{font-size:11px;color:var(--text2);line-height:1.55}
+.alevel-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.def-block{margin-bottom:36px;padding:28px 32px;background:var(--teal-dark);border:0.5px solid var(--teal);border-radius:10px;max-width:760px;transition:background .3s}
+.def-block-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.def-block-quote{font-family:'DM Serif Display',serif;font-size:21px;font-style:italic;color:var(--teal-light);line-height:1.4;margin-bottom:18px}
+[data-theme="light"] .def-block-quote{color:var(--teal-mid)}
+.def-block-body{font-size:13px;color:var(--text2);line-height:1.75}
+.def-block-body p+p{margin-top:12px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle menu">☰</button>
+    <div class="nav-logo" onclick="goHome()">de<span>/</span>guide</div>
+  </div>
+  <div class="nav-breadcrumb" id="breadcrumb"></div>
+</nav>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-section">Navigation</div>
+
+  <button class="sidebar-item" onclick="goHome()">
+    <span class="si-dot"></span> Home
+  </button>
+  <button class="sidebar-item" onclick="goTo('page-about')">
+    <span class="si-dot"></span> About us
+  </button>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section">Track 01 — Design Engineering</div>
+
+  <button class="sidebar-item" onclick="goTo('page-de')">
+    <span class="si-dot"></span> Overview
+  </button>
+  <button class="sidebar-item" onclick="goTo('page-alevels')">
+    <span class="si-dot"></span> A-levels
+  </button>
+  <button class="sidebar-item" onclick="goTo('page-apply')">
+    <span class="si-dot"></span> How to apply
+  </button>
+  <button class="sidebar-item" style="padding-left:28px;font-size:11px" onclick="goTo('page-ps')">
+    <span class="si-dot"></span> Personal statement
+  </button>
+  <button class="sidebar-item" style="padding-left:28px;font-size:11px" onclick="goTo('page-esat')">
+    <span class="si-dot"></span> ESAT prep
+  </button>
+  <button class="sidebar-item" style="padding-left:28px;font-size:11px" onclick="goTo('page-interview')">
+    <span class="si-dot"></span> Interview prep
+  </button>
+  <button class="sidebar-item" style="padding-left:44px;font-size:11px" onclick="goTo('page-portfolio')">
+    <span class="si-dot"></span> Portfolio prep
+  </button>
+  <button class="sidebar-item" style="padding-left:44px;font-size:11px" onclick="goTo('page-questions')">
+    <span class="si-dot"></span> Common questions
+  </button>
+  <button class="sidebar-item" style="padding-left:44px;font-size:11px" onclick="goTo('page-designtask')">
+    <span class="si-dot"></span> Design task tips
+  </button>
+  <button class="sidebar-item" style="padding-left:28px;font-size:11px" onclick="goTo('page-entry')">
+    <span class="si-dot"></span> Entry requirements
+  </button>
+  <button class="sidebar-item" style="padding-left:28px;font-size:11px" onclick="goTo('page-timeline')">
+    <span class="si-dot"></span> Timeline
+  </button>
+  <button class="sidebar-item" onclick="goTo('page-course')">
+    <span class="si-dot"></span> The course
+  </button>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section">Track 02 — Materials Science</div>
+  <button class="sidebar-item" style="opacity:.4;cursor:default">
+    <span class="si-dot"></span> Coming soon
+  </button>
+
+  <div class="sidebar-bottom">
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span class="theme-toggle-label" id="theme-label">DARK MODE</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="theme-toggle-emoji" id="theme-emoji">☀️</span>
+        <div class="theme-toggle-switch" id="toggle-switch"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN WRAPPER -->
+<div class="shell">
+  <div class="main" id="main">
+
+    <!-- ==================== HOME ==================== -->
+    <div class="page active" id="page-home">
+      <div class="home-hero">
+        <div class="hero-image-col">
+          <img class="hero-img" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&q=80" alt="Engineering lab" onerror="this.src='https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80'">
+          <div class="hero-img-overlay"></div>
+          <div class="hero-text-over">
+            <div class="hero-tag">Imperial College London</div>
+            <h1>The guide that <em>should</em> have existed.</h1>
+            <p>Design Engineering and Materials Science are two of the most exciting, most niche courses at Imperial. We built the resource we wished we'd had.</p>
+            <div class="btn-row">
+              <button class="btn-primary" onclick="goTo('page-de')">Explore the guide</button>
+              <button class="btn-ghost" onclick="goTo('page-about')">About us</button>
+            </div>
+            <div class="badge-row">
+              <div class="badge">A-level strategy</div>
+              <div class="badge">Application tips</div>
+              <div class="badge">Course breakdown</div>
+              <div class="badge">Student perspective</div>
+              <div class="badge">Free forever</div>
+            </div>
+          </div>
+        </div>
+        <div class="home-right">
+          <div class="track-card" onclick="goTo('page-de')">
+            <img class="track-card-img" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900&q=80" alt="Robotics">
+            <div class="track-card-content">
+              <div class="track-num de">Track 01</div>
+              <h3>Design Engineering</h3>
+              <p>No playbook exists. We built one. From A-levels to the reality of DE at Imperial.</p>
+            </div>
+            <div class="track-arrow">→</div>
+          </div>
+          <div class="track-card locked">
+            <img class="track-card-img" src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=900&q=80" alt="Materials science">
+            <div class="track-card-content">
+              <div class="track-num ms">Track 02</div>
+              <h3>Materials Science</h3>
+              <p>Criminally underdocumented. Being built right now.</p>
+            </div>
+            <div class="coming-pill">Coming soon</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Niche courses covered</div></div>
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Resources like this that existed before</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Students we want to help</div></div>
+      </div>
+      <footer><p>Built by students, for students.</p><span>Uthman · Javeria</span></footer>
+    </div>
+
+    <!-- ==================== DE OVERVIEW ==================== -->
+    <div class="page" id="page-de">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1400&q=80" alt="Design engineering workshop">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Track 01 — Design Engineering</div>
+          <h2>Where do you want to <em>start?</em></h2>
+          <p>Everything here is written from the inside — by someone who's actually doing the course at the Dyson School.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goHome()">← Home</button>
+        <div class="def-block">
+          <div class="def-block-label">Design Engineering — A Student's Definition</div>
+          <p class="def-block-quote">"A jack of all trades, but master of none — though oftentimes better than a master of one."</p>
+          <div class="def-block-body">
+            <p>We cover a broad range of engineering disciplines — materials science, mechanical engineering, computing, and electrical engineering — building an understanding across fields that most engineers never look beyond their own. It can feel like a lot at first, but you quickly realise how it all connects, and that breadth becomes one of your biggest strengths.</p>
+            <p>What sets the course apart is that the learning doesn't stop at theory. We apply everything through hands-on projects, which means you're not just studying engineering — you're actually doing it.</p>
+          </div>
+        </div>
+        <div class="section-grid">
+          <div class="section-card" onclick="goTo('page-alevels')">
+            <div class="s-num">01</div><h3>A-levels</h3>
+            <p>What to take, what admissions actually looks for, and what gives you the edge.</p>
+            <div class="arrow">→</div>
+          </div>
+          <div class="section-card" onclick="goTo('page-apply')">
+            <div class="s-num">02</div><h3>How to apply</h3>
+            <p>Personal statement, ESAT prep, interviews, entry requirements and timeline.</p>
+            <div class="arrow">→</div>
+          </div>
+          <div class="section-card" onclick="goTo('page-course')">
+            <div class="s-num">03</div><h3>The course</h3>
+            <p>A breakdown of every year, every module, and what the experience actually feels like.</p>
+            <div class="arrow">→</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== A-LEVELS ==================== -->
+    <div class="page" id="page-alevels">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=1400&q=80" alt="Maths study">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">A-levels</div>
+          <h2>What you need to <em>study</em></h2>
+          <p>Design Engineering at Imperial requires Maths at A* and is competitive — the subject choices you make now can genuinely set you apart.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-de')">← Design Engineering</button>
+        <div class="alevel-label">Required</div>
+        <div class="alevel-required">
+          <div class="grade">A*</div>
+          <div><h4>Mathematics</h4><p>Non-negotiable — the only subject-specific grade requirement.</p></div>
+        </div>
+        <div class="alevel-label">Recommended subjects</div>
+        <div class="alevel-grid">
+          <div class="alevel-card"><h4>Further Mathematics</h4><p>Strongly recommended. Makes Year 1 Engineering Maths significantly more manageable and signals mathematical maturity to admissions.</p></div>
+          <div class="alevel-card"><h4>Physics</h4><p>Highly useful. Solid Mechanics, Electronics, and Thermofluids all draw heavily on A-level Physics foundations.</p></div>
+          <div class="alevel-card"><h4>Chemistry</h4><p>Helpful for Materials and Manufacturing. Not essential but gives you a head start understanding material properties.</p></div>
+          <div class="alevel-card"><h4>Design Technology</h4><p>Relevant to the creative and prototyping side of the course. Shows admissions you already think like a designer.</p></div>
+        </div>
+        <div class="stats-row" style="margin-top:24px;border-radius:10px;border:0.5px solid var(--border);overflow:hidden;border-top:0.5px solid var(--border)">
+          <div class="stat"><div class="stat-num">A*AA</div><div class="stat-label">Minimum offer (A* in Maths)</div></div>
+          <div class="stat"><div class="stat-num">7:1</div><div class="stat-label">Applications to places (2025)</div></div>
+          <div class="stat"><div class="stat-num">39</div><div class="stat-label">IB points equivalent</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HOW TO APPLY ==================== -->
+    <div class="page" id="page-apply">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&q=80" alt="Application planning">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">How to apply</div>
+          <h2>Breaking <em>into</em> the course</h2>
+          <p>The application process has several stages. Each one is an opportunity to stand out.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-de')">← Design Engineering</button>
+        <div class="content-grid">
+          <div class="content-item" onclick="goTo('page-ps')"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>Personal statement</h4><p>Tips, structure, what admissions wants to see</p></div></div><div class="arr">→</div></div>
+          <div class="content-item" onclick="goTo('page-esat')"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>ESAT prep</h4><p>Maths 1 and 2 — what to expect, how to prepare</p></div></div><div class="arr">→</div></div>
+          <div class="content-item" onclick="goTo('page-interview')"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>Interview prep</h4><p>Online, Nov to Mar — portfolio, questions, tasks</p></div></div><div class="arr">→</div></div>
+          <div class="content-item" onclick="goTo('page-entry')"><div class="content-item-left"><div class="dot dot-amber"></div><div><h4>Entry requirements</h4><p>A*AA including A* in Maths</p></div></div><div class="arr">→</div></div>
+          <div class="content-item" onclick="goTo('page-timeline')"><div class="content-item-left"><div class="dot dot-amber"></div><div><h4>Timeline</h4><p>Key dates from UCAS open to offers</p></div></div><div class="arr">→</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PERSONAL STATEMENT ==================== -->
+    <div class="page" id="page-ps">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=1400&q=80" alt="Writing">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Personal statement</div>
+          <h2>Telling your <em>story</em></h2>
+          <p>Your chance to show you think like a design engineer — not just that you've done the right subjects.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-apply')">← How to apply</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>What admissions looks for</h4><p>Independent thinking, genuine curiosity about design and engineering, and self-directed projects or experiments.</p></div>
+          <div class="sub-card"><h4>Structure tips</h4><p>Lead with a hook, not a cliché. Show your intellectual journey. End with where you want to go and why DE specifically.</p></div>
+          <div class="sub-card"><h4>Projects and evidence</h4><p>Any project — however small — that shows you build without being told to is gold. Describe what you made, what went wrong, and what you learned.</p></div>
+          <div class="sub-card"><h4>Common mistakes</h4><p>Listing subjects you enjoy without showing why. Being vague about DE. Describing teamwork without saying what your specific role was.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ESAT ==================== -->
+    <div class="page" id="page-esat">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1400&q=80" alt="Maths equations">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">ESAT prep</div>
+          <h2>The admissions <em>test</em></h2>
+          <p>Computer-based, multiple choice. For Design Engineering you sit Maths 1 and Maths 2 — 27 questions each, 40 minutes each.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-apply')">← How to apply</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>Maths 1</h4><p>A-level core — algebra, calculus, trigonometry, statistics, mechanics. 27 questions, 40 minutes.</p></div>
+          <div class="sub-card"><h4>Maths 2</h4><p>Further Maths territory — complex numbers, matrices, further calculus, differential equations. 27 questions, 40 minutes.</p></div>
+          <div class="sub-card"><h4>When to sit it</h4><p>Window 1: Oct 12–16, 2026. Window 2: Jan 4–8, 2027. Book through UAT-UK from 20 July 2026.</p></div>
+          <div class="sub-card"><h4>How to prepare</h4><p>Past papers are your best resource. Time management matters as much as content — it is fast and unforgiving.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== INTERVIEW ==================== -->
+    <div class="page" id="page-interview">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1400&q=80" alt="Interview">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Interview prep</div>
+          <h2>The <em>interview</em></h2>
+          <p>Online, November to March. Assessed on how you think through problems — not just what you know.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-apply')">← How to apply</button>
+        <div class="content-grid">
+          <div class="content-item" onclick="goTo('page-portfolio')"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>Portfolio prep</h4><p>2 minutes to show your work</p></div></div><div class="arr">→</div></div>
+          <div class="content-item" onclick="goTo('page-questions')"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>Common questions</h4><p>What interviewers actually ask</p></div></div><div class="arr">→</div></div>
+          <div class="content-item" onclick="goTo('page-designtask')" style="grid-column:1/-1"><div class="content-item-left"><div class="dot dot-amber"></div><div><h4>Design task tips</h4><p>How to approach live design problems</p></div></div><div class="arr">→</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PORTFOLIO ==================== -->
+    <div class="page" id="page-portfolio">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1400&q=80" alt="Portfolio">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Portfolio prep</div>
+          <h2>Two minutes to show <em>everything</em></h2>
+          <p>Quality over quantity. They want to see what you make when nobody asks you to.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-interview')">← Interview prep</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>What to include</h4><p>Anything you've made, built, designed, or coded. Physical projects, digital tools, art — anything that shows you create without being told to.</p></div>
+          <div class="sub-card"><h4>What not to include</h4><p>School coursework unless genuinely impressive. Generic content that could belong to anyone. Anything you can't talk about in depth.</p></div>
+          <div class="sub-card"><h4>How to present it</h4><p>Lead with what it is and why you made it. Don't narrate every detail — let the work speak.</p></div>
+          <div class="sub-card"><h4>What they're really assessing</h4><p>Whether you build independently. Whether you reflect on what you make. Whether you have genuine curiosity and initiative.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== COMMON QUESTIONS ==================== -->
+    <div class="page" id="page-questions">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1400&q=80" alt="Discussion">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Common questions</div>
+          <h2>What they <em>actually</em> ask</h2>
+          <p>Open-ended and problem-based. They want to see how you think, not just what you know.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-interview')">← Interview prep</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>"Why Design Engineering?"</h4><p>Be specific. Reference something real — a project, a problem, an experience. Vague answers don't stand out.</p></div>
+          <div class="sub-card"><h4>"Tell me about something you've built"</h4><p>Have two or three examples ready. Talk about the problem, your approach, what failed, and what you'd do differently.</p></div>
+          <div class="sub-card"><h4>Technical maths and physics problems</h4><p>Problems you haven't seen before. Think out loud — they want to follow your reasoning, not just your answer.</p></div>
+          <div class="sub-card"><h4>"What would you redesign and why?"</h4><p>Pick something specific. Articulate the problem clearly before jumping to solutions. Show you observe the world critically.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DESIGN TASK ==================== -->
+    <div class="page" id="page-designtask">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80" alt="Design sketching">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Design task tips</div>
+          <h2>Thinking on your <em>feet</em></h2>
+          <p>The goal isn't a perfect answer — it's showing how you approach an open problem under pressure.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-interview')">← Interview prep</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>Understand before you solve</h4><p>Define the problem clearly before jumping to solutions. Don't assume you already know what the problem is.</p></div>
+          <div class="sub-card"><h4>Think out loud</h4><p>Your reasoning is more valuable than your conclusion. Narrate your constraints and trade-offs.</p></div>
+          <div class="sub-card"><h4>Don't panic at ambiguity</h4><p>Vague briefs are intentional. Ask clarifying questions. Comfort with uncertainty is a core DE skill.</p></div>
+          <div class="sub-card"><h4>Sketch if you can</h4><p>Even rough sketches help communicate ideas and show spatial thinking. Clarity matters far more than polish.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ENTRY REQUIREMENTS ==================== -->
+    <div class="page" id="page-entry">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1400&q=80" alt="University">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Entry requirements</div>
+          <h2>What you need to <em>get in</em></h2>
+          <p>Imperial assesses applicants individually, but these are the hard benchmarks to hit.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-apply')">← How to apply</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>A-levels: A*AA</h4><p>The A* must be in Mathematics. Physics and Further Maths are strongly recommended alongside.</p></div>
+          <div class="sub-card"><h4>International Baccalaureate: 39 points</h4><p>With a 7 in Mathematics at Higher Level. Both Maths Analysis and Maths Applications are accepted.</p></div>
+          <div class="sub-card"><h4>ESAT required</h4><p>You must sit Maths 1 and Maths 2. Your result is considered alongside the full application — no minimum published.</p></div>
+          <div class="sub-card"><h4>Interview required</h4><p>If shortlisted. Online, November to March. Not everyone who sits the ESAT gets an interview.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TIMELINE ==================== -->
+    <div class="page" id="page-timeline">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1400&q=80" alt="Calendar">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">Timeline</div>
+          <h2>The application <em>calendar</em></h2>
+          <p>Key dates for 2027 entry. The ESAT booking window catches people off guard — plan ahead.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-apply')">← How to apply</button>
+        <div class="content-grid" style="grid-template-columns:1fr">
+          <div class="content-item" style="cursor:default"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>May 2026</h4><p>UCAS applications open (12 May 2026)</p></div></div></div>
+          <div class="content-item" style="cursor:default"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>July 2026</h4><p>ESAT booking opens (20 July). Register with UAT-UK first.</p></div></div></div>
+          <div class="content-item" style="cursor:default"><div class="content-item-left"><div class="dot dot-teal"></div><div><h4>October 2026</h4><p>UCAS deadline (15 Oct). ESAT Window 1: Oct 12–16.</p></div></div></div>
+          <div class="content-item" style="cursor:default"><div class="content-item-left"><div class="dot dot-amber"></div><div><h4>Nov 2026 – Mar 2027</h4><p>Interviews for shortlisted applicants (online)</p></div></div></div>
+          <div class="content-item" style="cursor:default"><div class="content-item-left"><div class="dot dot-amber"></div><div><h4>January 2027</h4><p>ESAT Window 2: Jan 4–8</p></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== THE COURSE ==================== -->
+    <div class="page" id="page-course">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1400&q=80" alt="Engineering workshop">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">The course</div>
+          <h2>Four years at the <em>Dyson School</em></h2>
+          <p>A 4-year MEng. Accredited by IED, IMechE, and IET. Fully qualifies you for Chartered Engineer status.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goTo('page-de')">← Design Engineering</button>
+        <div class="year-tabs">
+          <button class="year-tab active" onclick="showYear('y1',this)">Year 1</button>
+          <button class="year-tab" onclick="showYear('y2',this)">Year 2</button>
+          <button class="year-tab" onclick="showYear('y3',this)">Year 3</button>
+          <button class="year-tab" onclick="showYear('y4',this)">Year 4</button>
+        </div>
+        <div class="modules-panel active" id="y1">
+          <div class="module-item"><h4>Design Engineering Principles</h4><p>Ethics, environment, social factors, design mindsets</p></div>
+          <div class="module-item"><h4>Engineering Mathematics</h4><p>Mathematical tools for design engineering problems</p></div>
+          <div class="module-item"><h4>Computing 1: Scientific Computing</h4><p>Python programming and data tools</p></div>
+          <div class="module-item"><h4>Materials and Manufacturing</h4><p>Engineering materials and manufacturing methods</p></div>
+          <div class="module-item"><h4>Human-centred Design Engineering</h4><p>Design drawing, engineering drawing, 3D CAD</p></div>
+          <div class="module-item"><h4>Data Science</h4><p>Data analysis, statistics, machine learning foundations</p></div>
+          <div class="module-item"><h4>Solid Mechanics 1</h4><p>Force, displacement, real-world structural modelling</p></div>
+          <div class="module-item"><h4>Electronics 1</h4><p>Analogue and digital electronics, sensors, mechatronics</p></div>
+        </div>
+        <div class="modules-panel" id="y2">
+          <div class="module-item"><h4>Sustainable Design Engineering</h4><p>Sustainability principles and methods for design</p></div>
+          <div class="module-item"><h4>Physical Computing</h4><p>Mechatronics, machine elements, electronic components</p></div>
+          <div class="module-item"><h4>Solid Mechanics 2</h4><p>Kinematics and stress analysis</p></div>
+          <div class="module-item"><h4>Electronics 2: Signals, Systems, Control</h4><p>Signal processing, interpretation, manipulation</p></div>
+          <div class="module-item"><h4>Finite Element Analysis</h4><p>FE programs for linear elastic stress analysis</p></div>
+          <div class="module-item"><h4>Thermofluids: Energy and Design</h4><p>Fluid mechanics, heat transfer, thermodynamics</p></div>
+          <div class="module-item"><h4>Product Design Engineering</h4><p>Human-centred electromechanical product design</p></div>
+          <div class="module-item"><h4>Working in Organisations</h4><p>Career landscape, professional positioning</p></div>
+          <div class="module-item"><h4>Computing 2: Web Applications</h4><p>UI/UX, client-server architectures, data sources</p></div>
+          <div class="module-item iexplore"><h4>I-Explore</h4><p>Free-choice cross-faculty module — pick anything</p></div>
+        </div>
+        <div class="modules-panel" id="y3">
+          <div class="module-item"><h4>Design Engineering Futures</h4><p>Interdisciplinary group design project</p></div>
+          <div class="module-item"><h4>Robotics 1: Introduction to Robotics</h4><p>Robot control and motion planning algorithms</p></div>
+          <div class="module-item"><h4>Robotics 2: Applied Robotics</h4><p>Hands-on robotics lab and tutorials</p></div>
+          <div class="module-item"><h4>Optimisation</h4><p>System design and engineering optimisation</p></div>
+          <div class="module-item"><h4>Innovation and Entrepreneurship</h4><p>Entrepreneurial thinking and radical innovation</p></div>
+          <div class="module-item optional"><h4>Optional module 1</h4><p>Industrial Design, Machine Learning, Audio Design, Behavioural Change, Economics, Game Theory and more</p></div>
+          <div class="module-item optional"><h4>Optional module 2</h4><p>Same pool — choose what fits your direction</p></div>
+          <div class="module-item placement"><h4>6-month paid industrial placement</h4><p>Past hosts: Dyson, Apple, Jaguar Land Rover, Rolls-Royce, Microsoft, Brompton Bicycles</p></div>
+        </div>
+        <div class="modules-panel" id="y4">
+          <div class="module-item"><h4>Design Engineering Master's Project</h4><p>Major self-directed project in an area of your choice</p></div>
+          <div class="module-item"><h4>Enterprise Roll Out</h4><p>Management and business for entrepreneurial ventures</p></div>
+          <div class="module-item"><h4>Placement Part 2 and Reflection</h4><p>Complete project and report on professional development</p></div>
+          <div class="module-item optional"><h4>2 modules from Group A</h4><p>Advanced Industrial Design, ML, Audio, Game Theory, Economics, UI/Interactions and more</p></div>
+          <div class="module-item optional"><h4>2 modules from Group B</h4><p>Design Psychology, Nano Design, Robotics Research, IoT and Sensing, Transformational Play and more</p></div>
+          <div class="module-item optional"><h4>2 modules from Group C</h4><p>Additive Manufacturing, Visual Systems, Inferential Statistics, Sustainable Design Strategy and more</p></div>
+        </div>
+        <div class="stats-row" style="margin-top:20px;border-radius:10px;border:0.5px solid var(--border);overflow:hidden;border-top:0.5px solid var(--border)">
+          <div class="stat"><div class="stat-num">4</div><div class="stat-label">Year integrated MEng</div></div>
+          <div class="stat"><div class="stat-num">CEng</div><div class="stat-label">Full Chartered Engineer qualification</div></div>
+          <div class="stat"><div class="stat-num">ACGI</div><div class="stat-label">City and Guilds associateship also awarded</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== ABOUT ==================== -->
+    <div class="page" id="page-about">
+      <div class="inner-hero">
+        <img class="inner-hero-img" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80" alt="Students collaborating">
+        <div class="inner-hero-overlay"></div>
+        <div class="inner-hero-content">
+          <div class="tag">About us</div>
+          <h2>Built by students, <em>for students</em></h2>
+          <p>Two Imperial students. One shared frustration. One resource that should have existed years ago.</p>
+        </div>
+      </div>
+      <div class="section-body">
+        <button class="back-btn" onclick="goHome()">← Home</button>
+        <div class="sub-grid">
+          <div class="sub-card"><h4>Uthman</h4><p>Design Engineering MEng student at the Dyson School, Imperial College London. Built this because the resource he needed didn't exist when he was applying.</p></div>
+          <div class="sub-card"><h4>Javeria</h4><p>Materials Science and Engineering student at Imperial. Building out Track 02 — the equally underdocumented sister course.</p></div>
+          <div class="sub-card"><h4>Why we built this</h4><p>Nobody asked us to. We both identified the gap, got frustrated, and started executing. That instinct — spot an unsolved problem and build before anyone gives you permission — is exactly what this course teaches anyway.</p></div>
+          <div class="sub-card"><h4>What's coming</h4><p>Track 02 (Materials Science) is being built now. A student Q&A section, more interview prep content, and eventually a community layer so prospective students can ask real questions.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+let historyStack=[];
+let sidebarOpen=false;
+
+const labels={
+  'page-home':'Home','page-de':'Design Engineering','page-alevels':'A-levels',
+  'page-apply':'How to apply','page-ps':'Personal statement','page-esat':'ESAT prep',
+  'page-interview':'Interview prep','page-portfolio':'Portfolio prep',
+  'page-questions':'Common questions','page-designtask':'Design task tips',
+  'page-entry':'Entry requirements','page-timeline':'Timeline',
+  'page-course':'The course','page-about':'About'
+};
+
+function updateBreadcrumb(p){
+  const bc=document.getElementById('breadcrumb');
+  if(p==='page-home'){bc.innerHTML='';return;}
+  let trail=['page-home'];
+  historyStack.forEach(x=>{if(x!=='page-home'&&!trail.includes(x))trail.push(x);});
+  if(!trail.includes(p))trail.push(p);
+  bc.innerHTML=trail.map((x,i)=>i===trail.length-1
+    ?`<span class="crumb active">${labels[x]||x}</span>`
+    :`<span class="crumb" onclick="goTo('${x}')">${labels[x]||x}</span><span class="sep">/</span>`
+  ).join('');
+}
+
+function updateSidebarActive(p){
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(el=>{
+    const oc=el.getAttribute('onclick')||'';
+    if(oc.includes(p))el.classList.add('active');
+    if(p==='page-home'&&oc.includes('goHome'))el.classList.add('active');
+  });
+}
+
+function goTo(id){
+  const cur=document.querySelector('.page.active');
+  if(cur)historyStack.push(cur.id);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  updateBreadcrumb(id);
+  updateSidebarActive(id);
+}
+
+function goHome(){
+  historyStack=[];
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  updateBreadcrumb('page-home');
+  updateSidebarActive('page-home');
+}
+
+function toggleSidebar(){
+  sidebarOpen=!sidebarOpen;
+  const sb=document.getElementById('sidebar');
+  const main=document.getElementById('main');
+  sb.classList.toggle('open',sidebarOpen);
+  main.classList.toggle('sidebar-open',sidebarOpen);
+}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-label').textContent=isDark?'LIGHT MODE':'DARK MODE';
+  document.getElementById('theme-emoji').textContent=isDark?'🌙':'☀️';
+}
+
+function showYear(yr,btn){
+  document.querySelectorAll('.modules-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.year-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(yr).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Init sidebar active state
+updateSidebarActive('page-home');
+</script>
+</body>
+</html>
